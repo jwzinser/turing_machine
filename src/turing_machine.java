@@ -20,6 +20,24 @@ public class turing_machine {
             String s = file.next();
             String tm_thing  = s;
             System.out.print(tm_thing);
+            
+            // generar las maquinas de turing aleatorias e indexar cuales
+            // son cada uno de los estados y la funcion de cada bit del estado
+            // en este caso las maquinas de turing van a tener 64 estados de 16 bits c/u
+            TM_juan turing = new TM_juan(64,16); // si es de 8 bits cada estado sera de 512
+            String cinta_turing = turing.run_machine();
+            System.out.print("\n probando \n");
+            System.out.print(turing.states[1][2]);
+            // ya que inicializamos las maquinas de turing hay que correr las 
+            // las maquinas de turing sobre una cinta en blanco, como saber que la
+            // maquina de turing va a llegar al halt?
+            
+            
+            //ya que hayamos corrido las maquinas sobre la cinta en blanco hay que correr
+            // el algoritmo genetico sobre una funcion fitness que regrese una maquina de turing mejor
+            
+            
+            
             file.close();
             /*
             for(int i = 0; i < tm_thing.length(); i++) {
