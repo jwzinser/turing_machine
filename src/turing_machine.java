@@ -28,6 +28,8 @@ public class turing_machine {
             String cinta_turing = turing.run_machine();
             System.out.print("\n probando \n");
             System.out.print(turing.states[1][2]);
+            System.out.print(cinta_turing);
+
             // ya que inicializamos las maquinas de turing hay que correr las 
             // las maquinas de turing sobre una cinta en blanco, como saber que la
             // maquina de turing va a llegar al halt?
@@ -36,18 +38,13 @@ public class turing_machine {
             //ya que hayamos corrido las maquinas sobre la cinta en blanco hay que correr
             // el algoritmo genetico sobre una funcion fitness que regrese una maquina de turing mejor
             
-            
-            
+                       
             file.close();
-            /*
-            for(int i = 0; i < tm_thing.length(); i++) {
-                System.out.println(tm_thing.charAt(i));
-            }
-            */
+                
             
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.print("que pedo");
+            System.out.print("error");
 
         }       
 
