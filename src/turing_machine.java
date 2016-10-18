@@ -129,7 +129,7 @@ public class turing_machine {
 
             }
             
-
+            System.out.println("ahiva");
                        
             file.close();
                 
