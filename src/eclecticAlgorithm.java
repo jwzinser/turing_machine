@@ -1,41 +1,25 @@
 import java.util.*;
 
-public class TM_juan {
+
+public class eclecticAlgorithm {
     // initialice fields
-    public int[][] states;
-    public StringBuilder states_chain = new StringBuilder();
+    public String[] genome_list;
     public int aux;
-    public String turing_chain;
     Random randomGenerator = new Random();
 
 
-    // the turing machine class has
+    // the Bicycle class has
     // one constructor
-    public TM_juan(int numberStates, int bitPerState) {
-        states = new int [numberStates][bitPerState];
-        int rand_int;
-        states_chain.append("");
-
-        for (int i = 0; i <numberStates; ++i){
-        	for (int j = 0;j <bitPerState; ++j){
-        		rand_int = randomGenerator.nextInt(2);
-        		states[i][j]= rand_int;
-    			states_chain.append(Integer.toString(rand_int));
-
-        	}
-    	}
-        aux=0;
-        turing_chain = states_chain.toString(); 
+    public eclecticAlgorithm(String[] genomes) {
+    	genome_list=genomes;
     }
-      
+       
     // the TM_juan class has
     public void increment(int increment) {
         aux += increment;
     }
     
-    public String run_machine() {
-    	// modificar el metdodo para que se corra a partir de un string
-    	// que no necesariamente se tenga que correr a partir de una matriz
+    public String run_fitness() {
         // todo el proceso para correr la maquina de la cinta 
     	// del total de bits que tiene cada estado
     	int[] cinta = new int[1024*1024];
@@ -48,9 +32,8 @@ public class TM_juan {
     	int current_state = 0;
     	int max_iterator = 100;
     	int iterator = 0;
-    	int chain_iterator_module = 0;
     	while (!halt && iterator<=max_iterator){
-    		chain_iterator_module = 8*current_state;
+
     		int current_value = states[current_state][0];
     		int future_value = states[current_state][1];
     		int left_right = states[current_state][2];
@@ -92,35 +75,6 @@ public class TM_juan {
 		}
         return sb.toString();
     }
-    
-    public int run_fitness(String cinta, String target) {
 
-    	int penalty = 0;
-    	// penalize greatly the overload 
-    	int target_length = target.length();
-    	int cinta_length = cinta.length();
-    	int length_difference = target_length-cinta_length; 
-    	double length_difference_penalty = Math.pow(length_difference, 2);
-        
-
-    	if(length_difference > 0){
-    		// target is larger than cinta
-    	    target = target.substring(0,cinta_length);
-    	}
-    	else{
-    		// cinta is larger than target
-    	    cinta = cinta.substring(0,target_length);
-    	}
-    	
-
-        for(int i=0; i<target.length();i++){
-    		if(cinta.charAt(i)!=target.charAt(i)){
-    			penalty += 1;
-    		}
-    	}
-    	penalty += length_difference_penalty;
-    	// double cast_penalty = penalty;
-        return penalty;
-    }
 
 }
