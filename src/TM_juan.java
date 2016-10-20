@@ -1,5 +1,9 @@
 import java.util.*;
 
+/*
+ * This class has the main functions needed for the turing machine 
+ * calculations
+ */
 public class TM_juan {
     // initialice fields
     public int[][] states;
@@ -9,8 +13,10 @@ public class TM_juan {
     Random randomGenerator = new Random();
 
 
-    // the turing machine class has
-    // one constructor
+/*
+ * Initializes the turing machine with the specifies number and states
+ * by generating random bits
+ */
     public TM_juan(int numberStates, int bitPerState) {
         states = new int [numberStates][bitPerState];
         int rand_int;
@@ -24,20 +30,13 @@ public class TM_juan {
 
         	}
     	}
-        aux=0;
         turing_chain = states_chain.toString(); 
     }
       
-    // the TM_juan class has
-    public void increment(int increment) {
-        aux += increment;
-    }
-    
+    /*
+     * Runs a the turing machine in from the matrix representation of the machine
+     */
     public String run_machine() {
-    	// modificar el metdodo para que se corra a partir de un string
-    	// que no necesariamente se tenga que correr a partir de una matriz
-        // todo el proceso para correr la maquina de la cinta 
-    	// del total de bits que tiene cada estado
     	int[] cinta = new int[1024*1024];
     	// el head original es la mitad
     	int head = 1024*512;
@@ -113,12 +112,11 @@ public class TM_juan {
         return sb.toString();
     }
     
-    
+    /*
+     * runs the turing machine from a given string representation of a machine
+     */
     public String run_machine_from_string(String turing_tape) {
-    	// modificar el metdodo para que se corra a partir de un string
-    	// que no necesariamente se tenga que correr a partir de una matriz
-        // todo el proceso para correr la maquina de la cinta 
-    	// del total de bits que tiene cada estado
+
     	int[] cinta = new int[1024*1024];
     	// el head original es la mitad
     	int head = 1024*512;
@@ -200,12 +198,14 @@ public class TM_juan {
 		}
         return sb.toString();
     }
-
+    
+/*
+ * runs the turing machine from a string representation of a given turing machine
+ * and records the visited states to calculate kolmogorov complexity
+ * is close to the previous function but since this one is only called once
+ * its done separately to improve performance  
+ */
     public int run_machine_from_string_kolmogorov(String turing_tape) {
-    	// modificar el metdodo para que se corra a partir de un string
-    	// que no necesariamente se tenga que correr a partir de una matriz
-        // todo el proceso para correr la maquina de la cinta 
-    	// del total de bits que tiene cada estado
     	int[] cinta = new int[1024*1024];
     	// el head original es la mitad
     	int head = 1024*512;
@@ -299,6 +299,9 @@ public class TM_juan {
         return number_visited_states;
     }
         
+    /*
+     * Computes fitness function between target tape and given tape
+     */
     public int run_fitness(String cinta, String target) {
 
     	int penalty = 0;
