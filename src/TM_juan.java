@@ -51,28 +51,50 @@ public class TM_juan {
     	while (!halt && iterator<=max_iterator){
     		int current_value = states[current_state][0];
     		int future_value = states[current_state][1];
-    		int left_right = states[current_state][2];
+    		int left_right1 = states[current_state][2];
+    		int left_right2 = states[current_state][9];
+
     		// integer to string suppose it goes from 
-    		StringBuilder sb = new StringBuilder();
-    		sb.append("");
-    		for(int idx=2;idx<=7;idx++){
-        		sb.append(Integer.toString(states[current_state][idx]));
+    		StringBuilder sb1 = new StringBuilder();
+    		sb1.append("");
+    		for(int idx=3;idx<=8;idx++){
+        		sb1.append(Integer.toString(states[current_state][idx]));
     		}
-    		int future_state = Integer.parseInt(sb.toString(), 2);
+    		int future_state1 = Integer.parseInt(sb1.toString(), 2);
+    		
+    		StringBuilder sb2 = new StringBuilder();
+    		sb2.append("");
+    		for(int idx=10;idx<=15;idx++){
+        		sb2.append(Integer.toString(states[current_state][idx]));
+    		}
+    		int future_state2 = Integer.parseInt(sb2.toString(), 2);
 
     		if(cinta[head]==current_value){
     			cinta[head]=future_value;
+        		if(left_right1==0){
+        			head-=1;
+        		}else{
+        			head+=1;
+        		}
+        		if(future_state1==63){
+        			halt=true;
+        		}else{
+        			current_state=future_state1;
+        		}
     		}
-    		if(left_right==0){
-    			head-=1;
-    		}else{
-    			head+=1;
+    		else{
+        		if(left_right2==0){
+        			head-=1;
+        		}else{
+        			head+=1;
+        		}
+        		if(future_state2==63){
+        			halt=true;
+        		}else{
+        			current_state=future_state2;
+        		}
     		}
-    		if(future_state==63){
-    			halt=true;
-    		}else{
-    			current_state=future_state;
-    		}
+
     		iterator +=1;
     		if(head<min_index){
     			min_index=head;
@@ -114,30 +136,53 @@ public class TM_juan {
     				turing_tape.charAt(chain_iterator_module));
     		int future_value = Character.getNumericValue(
     				turing_tape.charAt(chain_iterator_module+1));
-    		int left_right = Character.getNumericValue(
+    		int left_right1 = Character.getNumericValue(
     				turing_tape.charAt(chain_iterator_module+2));
+    		int left_right2 = Character.getNumericValue(
+    				turing_tape.charAt(chain_iterator_module+9));
     		// integer to string suppose it goes from 
-    		StringBuilder sb = new StringBuilder();
-    		sb.append("");
-    		for(int idx=2;idx<=7;idx++){
+    		StringBuilder sb1 = new StringBuilder();
+    		sb1.append("");
+    		for(int idx=3;idx<=8;idx++){
     			char number_pos=turing_tape.charAt(chain_iterator_module+idx); 
-        		sb.append(Integer.toString(Character.getNumericValue(number_pos)));
+        		sb1.append(Integer.toString(Character.getNumericValue(number_pos)));
     		}
-    		int future_state = Integer.parseInt(sb.toString(), 2);
-
+    		int future_state1 = Integer.parseInt(sb1.toString(), 2);
+    		
+    		StringBuilder sb2 = new StringBuilder();
+    		sb2.append("");
+    		for(int idx=10;idx<=15;idx++){
+    			char number_pos=turing_tape.charAt(chain_iterator_module+idx); 
+        		sb2.append(Integer.toString(Character.getNumericValue(number_pos)));
+    		}
+    		int future_state2 = Integer.parseInt(sb2.toString(), 2);
+    		
     		if(cinta[head]==current_value){
     			cinta[head]=future_value;
+        		if(left_right1==0){
+        			head-=1;
+        		}else{
+        			head+=1;
+        		}
+        		if(future_state1==63){
+        			halt=true;
+        		}else{
+        			current_state=future_state1;
+        		}
     		}
-    		if(left_right==0){
-    			head-=1;
-    		}else{
-    			head+=1;
+    		else{
+        		if(left_right2==0){
+        			head-=1;
+        		}else{
+        			head+=1;
+        		}
+        		if(future_state2==63){
+        			halt=true;
+        		}else{
+        			current_state=future_state2;
+        		}
     		}
-    		if(future_state==63){
-    			halt=true;
-    		}else{
-    			current_state=future_state;
-    		}
+
     		iterator +=1;
     		if(head<min_index){
     			min_index=head;
@@ -155,7 +200,105 @@ public class TM_juan {
 		}
         return sb.toString();
     }
-    
+
+    public int run_machine_from_string_kolmogorov(String turing_tape) {
+    	// modificar el metdodo para que se corra a partir de un string
+    	// que no necesariamente se tenga que correr a partir de una matriz
+        // todo el proceso para correr la maquina de la cinta 
+    	// del total de bits que tiene cada estado
+    	int[] cinta = new int[1024*1024];
+    	// el head original es la mitad
+    	int head = 1024*512;
+    	// run machine
+    	int min_index = head;
+    	int max_index = head;
+    	boolean halt = false;
+    	int current_state = 0;
+    	int max_iterator = 1000;
+    	int iterator = 0;
+    	int chain_iterator_module = 0;
+    	int[] visited_states = new int[64];
+    	while (!halt && iterator<=max_iterator){
+        	visited_states[current_state] = 1;
+    		chain_iterator_module = 16*current_state;
+    		int current_value = Character.getNumericValue(
+    				turing_tape.charAt(chain_iterator_module));
+    		int future_value = Character.getNumericValue(
+    				turing_tape.charAt(chain_iterator_module+1));
+    		int left_right1 = Character.getNumericValue(
+    				turing_tape.charAt(chain_iterator_module+2));
+    		int left_right2 = Character.getNumericValue(
+    				turing_tape.charAt(chain_iterator_module+9));
+    		// integer to string suppose it goes from 
+    		StringBuilder sb1 = new StringBuilder();
+    		sb1.append("");
+    		for(int idx=3;idx<=8;idx++){
+    			char number_pos=turing_tape.charAt(chain_iterator_module+idx); 
+        		sb1.append(Integer.toString(Character.getNumericValue(number_pos)));
+    		}
+    		int future_state1 = Integer.parseInt(sb1.toString(), 2);
+    		
+    		StringBuilder sb2 = new StringBuilder();
+    		sb2.append("");
+    		for(int idx=10;idx<=15;idx++){
+    			char number_pos=turing_tape.charAt(chain_iterator_module+idx); 
+        		sb2.append(Integer.toString(Character.getNumericValue(number_pos)));
+    		}
+    		int future_state2 = Integer.parseInt(sb2.toString(), 2);
+    		
+    		if(cinta[head]==current_value){
+    			cinta[head]=future_value;
+        		if(left_right1==0){
+        			head-=1;
+        		}else{
+        			head+=1;
+        		}
+        		if(future_state1==63){
+        			halt=true;
+        		}else{
+        			current_state=future_state1;
+        		}
+    		}
+    		else{
+        		if(left_right2==0){
+        			head-=1;
+        		}else{
+        			head+=1;
+        		}
+        		if(future_state2==63){
+        			halt=true;
+        		}else{
+        			current_state=future_state2;
+        		}
+    		}
+
+    		iterator +=1;
+    		if(head<min_index){
+    			min_index=head;
+    		}
+    		if(head>max_index){
+    			max_index=head;
+    		}
+    		
+    	}
+    	// cut cinta on the significant segment, only where head was eventually
+		StringBuilder sb = new StringBuilder();
+		sb.append("");
+		for(int ct=min_index; ct<=max_index;ct++){
+			sb.append(Integer.toString(cinta[ct]));
+		}
+		int number_visited_states = 0;
+		for(int nv=0; nv<64; nv++){
+			if(visited_states[nv]==1){
+				number_visited_states+=1;
+			}
+		}
+		if(halt){
+			number_visited_states+=1;
+		}
+        return number_visited_states;
+    }
+        
     public int run_fitness(String cinta, String target) {
 
     	int penalty = 0;
@@ -175,11 +318,17 @@ public class TM_juan {
     	    cinta = cinta.substring(0,target_length);
     	}
     	
-
         for(int i=0; i<target.length();i++){
     		if(cinta.charAt(i)!=target.charAt(i)){
     			penalty += 1;
     		}
+    	}
+    	//int different_bits = penalty;
+    	double dpenalty = penalty;
+    	double dlength = target.length();
+    	double radio_penalty = dpenalty/dlength;
+    	if(radio_penalty>.2){
+    		penalty+=1000;
     	}
     	penalty += length_difference_penalty;
     	// double cast_penalty = penalty;
